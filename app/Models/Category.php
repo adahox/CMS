@@ -6,15 +6,15 @@ use App\Concerns\HasUuid;
 use Illuminate\Database\Eloquent\Attributes\Guarded;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 #[Guarded(['id', 'uuid'])]
-class Post extends Model
+class Category extends Model
 {
     use HasFactory, HasUuid;
 
-    public function category(): BelongsTo
+    public function posts(): HasMany
     {
-        return $this->belongsTo(Category::class, 'category_uuid', 'uuid');
+        return $this->hasMany(Post::class, 'category_uuid', 'uuid');
     }
 }

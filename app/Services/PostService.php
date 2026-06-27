@@ -11,9 +11,6 @@ class PostService
 {
     public function __construct(private PostRepository $repository) {}
 
-    /**
-     * @return Collection<int, Post>
-     */
     public function list(): Collection
     {
         return $this->repository->all();

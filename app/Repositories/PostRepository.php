@@ -9,29 +9,28 @@ class PostRepository
 {
     public function __construct(private Post $model) {}
 
-    /**
-     * @return Collection<int, Post>
-     */
     public function all(): Collection
     {
-        return $this->model->newQuery()->latest()->get();
+        return $this->model->newQuery()->with('category')->latest()->get();
     }
 
     public function findByUuid(string $uuid): ?Post
     {
-        return $this->model->newQuery()->where('uuid', $uuid)->first();
+        return $this->model->newQuery()->with('category')->where('uuid', $uuid)->first();
     }
 
     public function create(array $data): Post
     {
-        return $this->model->newQuery()->create($data);
+        $post = $this->model->newQuery()->create($data);
+
+        return $post->load('category');
     }
 
     public function update(Post $post, array $data): Post
     {
         $post->update($data);
 
-        return $post->refresh();
+        return $post->refresh()->load('category');
     }
 
     public function delete(Post $post): void

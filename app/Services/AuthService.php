@@ -11,10 +11,6 @@ class AuthService
 {
     public function __construct(private UserRepository $repository) {}
 
-    /**
-     * @param  array{email: string, password: string}  $credentials
-     * @return array{user: User, token: string}
-     */
     public function login(array $credentials): array
     {
         $user = $this->repository->findByEmail($credentials['email']);
@@ -31,10 +27,6 @@ class AuthService
         ];
     }
 
-    /**
-     * @param  array{name: string, email: string, password: string}  $data
-     * @return array{user: User, token: string}
-     */
     public function register(array $data): array
     {
         $user = $this->repository->create($data);
