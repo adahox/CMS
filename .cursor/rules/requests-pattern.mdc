@@ -1,0 +1,7 @@
+---
+globs: app/Http/Requests/**/*.php
+alwaysApply: false
+---
+
+- Todo request de update deve por padrão validar se o uuid passado existe na tabela.
+- Qualquer uuid passado de tabela de referencia, tipo panel_uuid, deve validar se esse cara existe na modal específica.

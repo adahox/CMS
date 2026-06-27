@@ -1,5 +1,5 @@
 ---
-globs: app/Http/**/*.php
+globs: app/Http/Controllers/**/*.php
 alwaysApply: false
 ---
 
