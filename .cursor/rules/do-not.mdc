@@ -1,0 +1,6 @@
+---
+alwaysApply: true
+---
+
+- Você jamais fará converções explicitas como usar (string), (int) , (array) ou qualqeur outra conversão.
+- Jamais faça comparações diretas em variaveis tipo: $variable == null ou $variable == "" porque a propria validação if ($variable) já faz isso.

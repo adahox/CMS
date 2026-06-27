@@ -1,0 +1,8 @@
+---
+alwaysApply: true
+---
+
+- A estrutura do projeto é feita em controller -> service -> repository -> model.
+- todo repository deve instanciar a model no controller por dependency Injection
+- Todas as migrations devem possuir coluna id e uuid.
+- A relação entre as tabelas, caso exista, é feita pela coluna uuid.

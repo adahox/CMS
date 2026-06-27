@@ -1,0 +1,10 @@
+---
+alwaysApply: true
+---
+
+- usar PSR-4 (autoload, namespaces bem organizados)
+- usar PSR-12 (formatação rigorosa)
+- usar SOLID (principalmente SRP e DIP no começo)
+- usar Clean Code (nomes claros, funções pequenas, sem “god classes”)
+- considerar Refactoring contínuo (estilo Refactoring.Guru: extrair método, extrair classe, mover responsabilidade) para regras de negócio
+- deve-se pensar sempre em Arquitetura escalável (pra virar plugin depois sem dor)

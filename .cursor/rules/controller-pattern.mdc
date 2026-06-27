@@ -1,0 +1,9 @@
+---
+globs: app/Http/**/*.php
+alwaysApply: false
+---
+
+- Controllers não possuem regras de negócio.
+- Services ou qualquer outra classe deve ser instanciada pelo metodo app() dentro do método a qual está utilizando.
+- Todo request de create/update deve possuir seu próprio Request de validação
+- Caso uma rota envie um parametro por exemplo: "/route/{$uuid}", você não deve incluir esse $uuid na assinatura do controller. ele deve ser usado com o metodo da variavel $request
