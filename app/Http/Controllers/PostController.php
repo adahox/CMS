@@ -10,16 +10,16 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
-        $posts = app(PostService::class)->list();
+        $posts = app(PostService::class)->list($request->all());
 
         return response()->json($posts);
     }
 
     public function show(Request $request): JsonResponse
     {
-        $post = app(PostService::class)->findByUuid($request->route('uuid'));
+        $post = app(PostService::class)->find($request->route('uuid'));
 
         return response()->json($post);
     }

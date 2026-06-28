@@ -9,16 +9,14 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PostService
 {
-    public function __construct(private PostRepository $repository) {}
-
-    public function list(): Collection
+    public function list(array $filter = []): Collection
     {
-        return $this->repository->all();
+        return app(PostRepository::class)->filter($filter);
     }
 
-    public function findByUuid(string $uuid): Post
+    public function find(string $uuid): Post
     {
-        $post = $this->repository->findByUuid($uuid);
+        $post = app(PostRepository::class)->find($uuid);
 
         if (! $post) {
             throw new NotFoundHttpException(__('Post not found.'));
@@ -29,20 +27,20 @@ class PostService
 
     public function create(array $data): Post
     {
-        return $this->repository->create($data);
+        return app(PostRepository::class)->create($data);
     }
 
     public function update(string $uuid, array $data): Post
     {
-        $post = $this->findByUuid($uuid);
+        $post = $this->find($uuid);
 
-        return $this->repository->update($post, $data);
+        return app(PostRepository::class)->update($post, $data);
     }
 
     public function delete(string $uuid): void
     {
-        $post = $this->findByUuid($uuid);
+        $post = $this->find($uuid);
 
-        $this->repository->delete($post);
+        app(PostRepository::class)->delete($post);
     }
 }

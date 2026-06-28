@@ -2,39 +2,50 @@
 
 namespace App\Repositories;
 
+use App\Concerns\Repository;
 use App\Models\Post;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 
 class PostRepository
 {
+    use Repository {
+        create as traitCreate;
+        find as traitFind;
+        update as traitUpdate;
+    }
+
     public function __construct(private Post $model) {}
-
-    public function all(): Collection
-    {
-        return $this->model->newQuery()->with('category')->latest()->get();
-    }
-
-    public function findByUuid(string $uuid): ?Post
-    {
-        return $this->model->newQuery()->with('category')->where('uuid', $uuid)->first();
-    }
 
     public function create(array $data): Post
     {
-        $post = $this->model->newQuery()->create($data);
+        $post = $this->traitCreate($data);
 
         return $post->load('category');
     }
 
-    public function update(Post $post, array $data): Post
+    public function find(string $uuid): ?Post
     {
-        $post->update($data);
+        $post = $this->traitFind($uuid);
 
-        return $post->refresh()->load('category');
+        return $post?->load('category');
     }
 
-    public function delete(Post $post): void
+    protected function newQuery(array $criteria = []): Builder
     {
-        $post->delete();
+        $query = $this->model->newQuery()->with('category');
+
+        foreach ($criteria as $column => $value) {
+            $query->where($column, $value);
+        }
+
+        return $query;
+    }
+
+    public function update(Model $model, array $data): Post
+    {
+        $post = $this->traitUpdate($model, $data);
+
+        return $post->load('category');
     }
 }
