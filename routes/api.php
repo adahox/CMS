@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdditionalFieldController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PostController;
@@ -24,5 +25,11 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('posts/{uuid}', [PostController::class, 'show'])->name('posts.show');
         Route::put('posts/{uuid}', [PostController::class, 'update'])->name('posts.update');
         Route::delete('posts/{uuid}', [PostController::class, 'destroy'])->name('posts.destroy');
+
+        Route::get('additional-fields', [AdditionalFieldController::class, 'index'])->name('additional-fields.index');
+        Route::post('additional-fields', [AdditionalFieldController::class, 'store'])->name('additional-fields.store');
+        Route::get('additional-fields/{uuid}', [AdditionalFieldController::class, 'show'])->name('additional-fields.show');
+        Route::put('additional-fields/{uuid}', [AdditionalFieldController::class, 'update'])->name('additional-fields.update');
+        Route::delete('additional-fields/{uuid}', [AdditionalFieldController::class, 'destroy'])->name('additional-fields.destroy');
     });
 });
