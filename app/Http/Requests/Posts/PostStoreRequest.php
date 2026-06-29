@@ -3,11 +3,12 @@
 namespace App\Http\Requests\Posts;
 
 use App\Domain\AdditionalFields\Models\AdditionalField;
+use App\Interfaces\ValidateInputData;
 use App\Models\Category;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class PostStoreRequest extends FormRequest
+class PostStoreRequest extends FormRequest implements ValidateInputData
 {
     public function rules(): array
     {

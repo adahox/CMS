@@ -2,49 +2,82 @@
 
 namespace App\Http\Controllers;
 
-use App\Domain\AdditionalFields\Services\CatalogService;
-use App\Http\Requests\AdditionalFields\AdditionalFieldStoreRequest;
-use App\Http\Requests\AdditionalFields\AdditionalFieldUpdateRequest;
+use App\Strategies\Standard\AdditionalField as AdditionalFieldStrategy;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class AdditionalFieldController extends Controller
 {
+    public function __construct(private readonly AdditionalFieldStrategy $additionalField) {}
+
     public function index(Request $request): JsonResponse
     {
-        $fields = app(CatalogService::class)->list($request->all());
+        try {
+            $data = $this->additionalField->toList($request->query());
 
-        return response()->json($fields);
+            return $this->success(
+                response: 'Listagem gerada com sucesso.',
+                data: $data,
+            );
+        } catch (\Exception $e) {
+            return $this->error(response: $e->getMessage());
+        }
     }
 
     public function show(Request $request): JsonResponse
     {
-        $field = app(CatalogService::class)->find($request->route('uuid'));
+        try {
+            $data = $this->additionalField->getByUuid($request->route('uuid'));
 
-        return response()->json($field);
+            return $this->success(
+                response: 'Registro encontrado com sucesso.',
+                data: $data,
+            );
+        } catch (\Exception $e) {
+            return $this->error(response: $e->getMessage());
+        }
     }
 
-    public function store(AdditionalFieldStoreRequest $request): JsonResponse
+    public function store(Request $request): JsonResponse
     {
-        $field = app(CatalogService::class)->create($request->validated());
+        try {
+            $data = $this->additionalField->toCreate($request->all());
 
-        return response()->json($field, 201);
+            return $this->success(
+                response: 'Registro criado com sucesso.',
+                data: $data,
+                code: 201,
+            );
+        } catch (\Exception $e) {
+            return $this->error(response: $e->getMessage());
+        }
     }
 
-    public function update(AdditionalFieldUpdateRequest $request): JsonResponse
+    public function update(Request $request): JsonResponse
     {
-        $field = app(CatalogService::class)->update(
-            $request->route('uuid'),
-            $request->validated(),
-        );
+        try {
+            $data = $this->additionalField->updateByUuid($request->route('uuid'), $request->all());
 
-        return response()->json($field);
+            return $this->success(
+                response: 'Registro atualizado com sucesso.',
+                data: $data,
+            );
+        } catch (\Exception $e) {
+            return $this->error(response: $e->getMessage());
+        }
     }
 
     public function destroy(Request $request): JsonResponse
     {
-        app(CatalogService::class)->delete($request->route('uuid'));
+        try {
+            $this->additionalField->deleteByUuid($request->route('uuid'));
 
-        return response()->json(null, 204);
+            return $this->success(
+                response: 'Registro removido com sucesso.',
+                data: null,
+            );
+        } catch (\Exception $e) {
+            return $this->error(response: $e->getMessage());
+        }
     }
 }

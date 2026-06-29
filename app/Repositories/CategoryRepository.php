@@ -2,12 +2,13 @@
 
 namespace App\Repositories;
 
-use App\Concerns\Repository;
+use App\Interfaces\RepositoriesInterface;
 use App\Models\Category;
+use App\Traits\Repository;
 
-class CategoryRepository
+class CategoryRepository implements RepositoriesInterface
 {
     use Repository;
 
-    public function __construct(private Category $model) {}
+    public function __construct(public Category $model) {}
 }

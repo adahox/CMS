@@ -3,11 +3,12 @@
 namespace App\Http\Requests\AdditionalFields;
 
 use App\Domain\AdditionalFields\Models\AdditionalField;
+use App\Interfaces\ValidateInputData;
 use App\Models\Category;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class AdditionalFieldUpdateRequest extends FormRequest
+class AdditionalFieldUpdateRequest extends FormRequest implements ValidateInputData
 {
     protected function prepareForValidation(): void
     {

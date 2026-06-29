@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Concerns;
+namespace App\Traits;
 
 use Illuminate\Support\Str;
 
-trait HasUuid
+trait UuidGenerator
 {
-    protected static function bootHasUuid(): void
+    protected static function bootUuidGenerator(): void
     {
         static::creating(function ($model) {
             if (! $model->uuid) {

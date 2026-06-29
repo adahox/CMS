@@ -2,49 +2,82 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Posts\PostStoreRequest;
-use App\Http\Requests\Posts\PostUpdateRequest;
-use App\Services\PostService;
+use App\Strategies\Standard\Post as PostStrategy;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
+    public function __construct(private readonly PostStrategy $post) {}
+
     public function index(Request $request): JsonResponse
     {
-        $posts = app(PostService::class)->list($request->all());
+        try {
+            $data = $this->post->toList($request->query());
 
-        return response()->json(app(PostService::class)->presentMany($posts));
+            return $this->success(
+                response: 'Listagem gerada com sucesso.',
+                data: $data,
+            );
+        } catch (\Exception $e) {
+            return $this->error(response: $e->getMessage());
+        }
     }
 
     public function show(Request $request): JsonResponse
     {
-        $post = app(PostService::class)->find($request->route('uuid'));
+        try {
+            $data = $this->post->getByUuid($request->route('uuid'));
 
-        return response()->json(app(PostService::class)->present($post));
+            return $this->success(
+                response: 'Registro encontrado com sucesso.',
+                data: $data,
+            );
+        } catch (\Exception $e) {
+            return $this->error(response: $e->getMessage());
+        }
     }
 
-    public function store(PostStoreRequest $request): JsonResponse
+    public function store(Request $request): JsonResponse
     {
-        $post = app(PostService::class)->create($request->validated());
+        try {
+            $data = $this->post->toCreate($request->all());
 
-        return response()->json(app(PostService::class)->present($post), 201);
+            return $this->success(
+                response: 'Registro criado com sucesso.',
+                data: $data,
+                code: 201,
+            );
+        } catch (\Exception $e) {
+            return $this->error(response: $e->getMessage());
+        }
     }
 
-    public function update(PostUpdateRequest $request): JsonResponse
+    public function update(Request $request): JsonResponse
     {
-        $post = app(PostService::class)->update(
-            $request->route('uuid'),
-            $request->validated(),
-        );
+        try {
+            $data = $this->post->updateByUuid($request->route('uuid'), $request->all());
 
-        return response()->json(app(PostService::class)->present($post));
+            return $this->success(
+                response: 'Registro atualizado com sucesso.',
+                data: $data,
+            );
+        } catch (\Exception $e) {
+            return $this->error(response: $e->getMessage());
+        }
     }
 
     public function destroy(Request $request): JsonResponse
     {
-        app(PostService::class)->delete($request->route('uuid'));
+        try {
+            $this->post->deleteByUuid($request->route('uuid'));
 
-        return response()->json(null, 204);
+            return $this->success(
+                response: 'Registro removido com sucesso.',
+                data: null,
+            );
+        } catch (\Exception $e) {
+            return $this->error(response: $e->getMessage());
+        }
     }
 }

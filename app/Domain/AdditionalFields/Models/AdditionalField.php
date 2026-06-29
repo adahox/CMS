@@ -2,8 +2,7 @@
 
 namespace App\Domain\AdditionalFields\Models;
 
-use App\Concerns\HasUuid;
-use Database\Factories\AdditionalFieldFactory;
+use App\Domain\AdditionalFields\Concerns\UuidGenerator;
 use Illuminate\Database\Eloquent\Attributes\Guarded;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,18 +11,13 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 #[Guarded(['id', 'uuid'])]
 class AdditionalField extends Model
 {
-    use HasFactory, HasUuid;
+    use HasFactory, UuidGenerator;
 
     protected $with = ['rule'];
 
     protected $hidden = ['rule'];
 
     protected $appends = ['target'];
-
-    protected static function newFactory(): AdditionalFieldFactory
-    {
-        return AdditionalFieldFactory::new();
-    }
 
     public function rule(): HasOne
     {

@@ -2,11 +2,12 @@
 
 namespace App\Http\Requests\AdditionalFields;
 
+use App\Interfaces\ValidateInputData;
 use App\Models\Category;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class AdditionalFieldStoreRequest extends FormRequest
+class AdditionalFieldStoreRequest extends FormRequest implements ValidateInputData
 {
     public function rules(): array
     {

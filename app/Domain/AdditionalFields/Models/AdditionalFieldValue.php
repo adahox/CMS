@@ -2,7 +2,7 @@
 
 namespace App\Domain\AdditionalFields\Models;
 
-use App\Concerns\HasUuid;
+use App\Domain\AdditionalFields\Concerns\UuidGenerator;
 use Illuminate\Database\Eloquent\Attributes\Guarded;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,10 +11,18 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 #[Guarded(['id', 'uuid'])]
 class AdditionalFieldValue extends Model
 {
-    use HasFactory, HasUuid;
+    use HasFactory, UuidGenerator;
 
     public function additionalField(): BelongsTo
     {
         return $this->belongsTo(AdditionalField::class, 'additional_field_uuid', 'uuid');
+    }
+
+    public function toArray(): array
+    {
+        return array_merge(
+            $this->relationLoaded('additionalField') ? ($this->additionalField?->toArray() ?? []) : [],
+            ['value' => $this->value],
+        );
     }
 }

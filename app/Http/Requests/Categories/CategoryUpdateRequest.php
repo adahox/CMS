@@ -2,11 +2,12 @@
 
 namespace App\Http\Requests\Categories;
 
+use App\Interfaces\ValidateInputData;
 use App\Models\Category;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class CategoryUpdateRequest extends FormRequest
+class CategoryUpdateRequest extends FormRequest implements ValidateInputData
 {
     protected function prepareForValidation(): void
     {
