@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Domain\AdditionalFields\Repositories;
 
 use App\Concerns\Repository;
-use App\Models\AdditionalFieldRule;
+use App\Domain\AdditionalFields\Models\AdditionalFieldRule;
 
 class AdditionalFieldRuleRepository
 {

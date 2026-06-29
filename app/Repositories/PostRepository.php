@@ -19,16 +19,12 @@ class PostRepository
 
     public function create(array $data): Post
     {
-        $post = $this->traitCreate($data);
-
-        return $post->load('category');
+        return $this->traitCreate($data)->load('category');
     }
 
     public function find(string $uuid): ?Post
     {
-        $post = $this->traitFind($uuid);
-
-        return $post?->load('category');
+        return $this->traitFind($uuid)?->load('category');
     }
 
     protected function newQuery(array $criteria = []): Builder
@@ -44,8 +40,6 @@ class PostRepository
 
     public function update(Model $model, array $data): Post
     {
-        $post = $this->traitUpdate($model, $data);
-
-        return $post->load('category');
+        return $this->traitUpdate($model, $data)->load('category');
     }
 }

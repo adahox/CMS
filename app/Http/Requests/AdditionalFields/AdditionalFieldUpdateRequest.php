@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\AdditionalFields;
 
-use App\Models\AdditionalField;
+use App\Domain\AdditionalFields\Models\AdditionalField;
 use App\Models\Category;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;

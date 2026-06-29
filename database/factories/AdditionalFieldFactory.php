@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\AdditionalField;
+use App\Domain\AdditionalFields\Models\AdditionalField;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class AdditionalFieldFactory extends Factory

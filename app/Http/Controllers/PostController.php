@@ -14,21 +14,21 @@ class PostController extends Controller
     {
         $posts = app(PostService::class)->list($request->all());
 
-        return response()->json($posts);
+        return response()->json(app(PostService::class)->presentMany($posts));
     }
 
     public function show(Request $request): JsonResponse
     {
         $post = app(PostService::class)->find($request->route('uuid'));
 
-        return response()->json($post);
+        return response()->json(app(PostService::class)->present($post));
     }
 
     public function store(PostStoreRequest $request): JsonResponse
     {
         $post = app(PostService::class)->create($request->validated());
 
-        return response()->json($post, 201);
+        return response()->json(app(PostService::class)->present($post), 201);
     }
 
     public function update(PostUpdateRequest $request): JsonResponse
@@ -38,7 +38,7 @@ class PostController extends Controller
             $request->validated(),
         );
 
-        return response()->json($post);
+        return response()->json(app(PostService::class)->present($post));
     }
 
     public function destroy(Request $request): JsonResponse

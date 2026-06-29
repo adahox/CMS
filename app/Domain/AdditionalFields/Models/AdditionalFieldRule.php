@@ -1,22 +1,20 @@
 <?php
 
-namespace App\Models;
+namespace App\Domain\AdditionalFields\Models;
 
 use App\Concerns\HasUuid;
-use App\Domain\AdditionalFields\Attributes\AdditionalFieldsPath;
 use Illuminate\Database\Eloquent\Attributes\Guarded;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-#[AdditionalFieldsPath('category')]
 #[Guarded(['id', 'uuid'])]
-class Post extends Model
+class AdditionalFieldRule extends Model
 {
     use HasFactory, HasUuid;
 
-    public function category(): BelongsTo
+    public function additionalField(): BelongsTo
     {
-        return $this->belongsTo(Category::class, 'category_uuid', 'uuid');
+        return $this->belongsTo(AdditionalField::class, 'additional_field_uuid', 'uuid');
     }
 }

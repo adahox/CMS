@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Models;
+namespace App\Domain\AdditionalFields\Models;
 
 use App\Concerns\HasUuid;
+use Database\Factories\AdditionalFieldFactory;
 use Illuminate\Database\Eloquent\Attributes\Guarded;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -18,6 +19,11 @@ class AdditionalField extends Model
     protected $hidden = ['rule'];
 
     protected $appends = ['target'];
+
+    protected static function newFactory(): AdditionalFieldFactory
+    {
+        return AdditionalFieldFactory::new();
+    }
 
     public function rule(): HasOne
     {

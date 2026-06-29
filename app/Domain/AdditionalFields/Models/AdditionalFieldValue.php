@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Domain\AdditionalFields\Models;
 
 use App\Concerns\HasUuid;
 use Illuminate\Database\Eloquent\Attributes\Guarded;
@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 #[Guarded(['id', 'uuid'])]
-class AdditionalFieldRule extends Model
+class AdditionalFieldValue extends Model
 {
     use HasFactory, HasUuid;
 

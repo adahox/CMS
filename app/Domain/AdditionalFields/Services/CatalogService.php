@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Services;
+namespace App\Domain\AdditionalFields\Services;
 
-use App\Models\AdditionalField;
-use App\Models\AdditionalFieldRule;
-use App\Repositories\AdditionalFieldRepository;
-use App\Repositories\AdditionalFieldRuleRepository;
+use App\Domain\AdditionalFields\Models\AdditionalField;
+use App\Domain\AdditionalFields\Models\AdditionalFieldRule;
+use App\Domain\AdditionalFields\Repositories\AdditionalFieldRepository;
+use App\Domain\AdditionalFields\Repositories\AdditionalFieldRuleRepository;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class AdditionalFieldService
+class CatalogService
 {
     public function list(array $filter = []): Collection
     {
