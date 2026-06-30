@@ -193,14 +193,20 @@ class AdditionalFieldsRelation extends Relation
 
     private function owner(): ?Model
     {
-        $owner = data_get($this->parent, $this->path);
+        $owner = $this->parent->{$this->path};
 
         return $owner instanceof Model ? $owner : null;
     }
 
     private function ownerTarget(): ?string
     {
-        $value = data_get($this->owner(), $this->key);
+        $owner = $this->owner();
+
+        if (! $owner) {
+            return null;
+        }
+
+        $value = $owner->{$this->key};
 
         return $value !== null ? (string) $value : null;
     }
@@ -242,13 +248,13 @@ class AdditionalFieldsRelation extends Relation
 
     private function ownerTargetFor(Model $model): ?string
     {
-        $owner = data_get($model, $this->path);
+        $owner = $model->{$this->path};
 
         if (! $owner instanceof Model) {
             return null;
         }
 
-        $value = data_get($owner, $this->key);
+        $value = $owner->{$this->key};
 
         return $value !== null ? (string) $value : null;
     }

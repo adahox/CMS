@@ -63,7 +63,7 @@ class Post implements ServicesInterface
             }
 
             $post = $this->repository->update($post, $postData);
-            $post->refresh()->load('category')->additionalFields()->sync($values);
+            $post->additionalFields()->sync($values);
 
             return $post->refresh();
         });
